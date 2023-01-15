@@ -1,4 +1,4 @@
-package br.com.learning.junit5.utils;
+package br.com.patientintake;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,6 +61,8 @@ class ClinicCalendarTest {
                 "09/01/2018 2:00 pm");
         assertEquals(2, clinicCalendar.getTodayAppointments().size());
     }
+
+
 
 
 

@@ -1,7 +1,7 @@
-package br.com.learning.junit5.demo;
+package br.com.patientintake.demo;
 
-import br.com.learning.junit5.utils.ClinicCalendar;
-import br.com.learning.junit5.utils.PatientAppointment;
+import br.com.patientintake.ClinicCalendar;
+import br.com.patientintake.PatientAppointment;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -30,11 +30,11 @@ public class ClinicMain {
       String option = scanner.next();
       switch (option) {
          case "1": performPatientEntry(scanner);
-                 return option;
+            return option;
          case "2": performAllAppointments();
-                 return option;
+            return option;
          default: System.out.println("Invalid option, please re-enter.");
-                  return option;
+            return option;
       }
    }
 
@@ -64,7 +64,7 @@ public class ClinicMain {
          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy hh:mm a");
          String apptTime = formatter.format(appointment.getAppointmentDateTime());
          System.out.println(String.format("%s:  %s, %s\t\tDoctor: %s", apptTime, appointment.getPatientLastName(),
-            appointment.getPatientFirstName(), appointment.getDoctor().getName()));
+                 appointment.getPatientFirstName(), appointment.getDoctor().getName()));
       }
       System.out.println("\nPress any key to continue...");
       System.in.read();

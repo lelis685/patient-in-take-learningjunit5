@@ -1,4 +1,4 @@
-package br.com.learning.junit5.utils;
+package br.com.patientintake;
 
 
 import java.time.LocalDateTime;
