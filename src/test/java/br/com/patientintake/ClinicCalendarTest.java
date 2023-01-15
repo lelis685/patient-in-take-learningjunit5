@@ -29,12 +29,15 @@ class ClinicCalendarTest {
         assertNotNull(appointments);
         assertEquals(1, appointments.size());
         PatientAppointment enteredAppt = appointments.get(0);
-        assertEquals("Jim", enteredAppt.getPatientFirstName());
-        assertEquals("Weaver", enteredAppt.getPatientLastName());
-        assertEquals(Doctor.avery, enteredAppt.getDoctor());
-        assertEquals("9/1/2023 02:00 PM",
-                enteredAppt.getAppointmentDateTime().format(DateTimeFormatter
-                        .ofPattern("M/d/yyyy hh:mm a",new Locale("pt", "BR"))));
+
+        assertAll(
+                () -> assertEquals("Jim", enteredAppt.getPatientFirstName()),
+                () -> assertEquals("Weaver", enteredAppt.getPatientLastName()),
+                () -> assertEquals(Doctor.avery, enteredAppt.getDoctor()),
+                () -> assertEquals("9/1/2023 02:00 PM", enteredAppt.getAppointmentDateTime().format(DateTimeFormatter
+                        .ofPattern("M/d/yyyy hh:mm a",new Locale("pt", "BR"))))
+        );
+
     }
 
 
