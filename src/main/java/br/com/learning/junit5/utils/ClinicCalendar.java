@@ -15,9 +15,21 @@ public class ClinicCalendar {
       this.appointments = new ArrayList<>();
    }
 
+   public ClinicCalendar(LocalDate today) {
+      this.today = today;
+      this.appointments = new ArrayList<>();
+   }
+
    public void addAppointment(String patientFirstName, String patientLastName, String doctorKey,
                               String dateTime) {
       Doctor doc = Doctor.valueOf(doctorKey.toLowerCase());
+      LocalDateTime localDateTime = convertToDateTimeFromString(dateTime);
+      PatientAppointment appointment = new PatientAppointment(patientFirstName, patientLastName,
+         localDateTime, doc);
+      appointments.add(appointment);
+   }
+
+   private static LocalDateTime convertToDateTimeFromString(String dateTime) {
       LocalDateTime localDateTime;
       try {
          localDateTime = LocalDateTime.parse(dateTime.toUpperCase(),
@@ -26,9 +38,7 @@ public class ClinicCalendar {
          throw new RuntimeException("Unable to create date time from: [" +
             dateTime.toUpperCase() + "], please enter with format [M/d/yyyy h:mm a]" + t.getMessage());
       }
-      PatientAppointment appointment = new PatientAppointment(patientFirstName, patientLastName,
-         localDateTime, doc);
-      appointments.add(appointment);
+      return localDateTime;
    }
 
    public List<PatientAppointment> getAppointments() {
