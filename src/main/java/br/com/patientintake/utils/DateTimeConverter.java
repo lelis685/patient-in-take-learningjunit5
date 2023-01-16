@@ -1,4 +1,4 @@
-package br.com.patientintake;
+package br.com.patientintake.utils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
