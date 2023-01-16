@@ -1,6 +1,8 @@
 package br.com.patientintake;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -12,19 +14,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ClinicCalendarTest {
 
-    private ClinicCalendar clinicCalendar;
-
+    private ClinicCalendar calendar;
     @BeforeEach
     void init(){
-        clinicCalendar = new ClinicCalendar(LocalDate.of(2023,1,15));
+        calendar = new ClinicCalendar(LocalDate.of(2018,8,26));
     }
 
 
     @Test
     void allowEntryOfAnAppointment(){
-        clinicCalendar.addAppointment("Jim", "Weaver", "avery",
+        calendar.addAppointment("Jim", "Weaver", "avery",
                 "9/1/2023 02:00 PM");
-        List<PatientAppointment> appointments = clinicCalendar.getAppointments();
+        List<PatientAppointment> appointments = calendar.getAppointments();
 
         assertNotNull(appointments);
         assertEquals(1, appointments.size());
@@ -43,30 +44,58 @@ class ClinicCalendarTest {
 
     @Test
     void returnTrueForHasAppointmentsIfThereAreAppointments() {
-        clinicCalendar.addAppointment("Jim", "Weaver", "avery",
+        calendar.addAppointment("Jim", "Weaver", "avery",
                 "09/01/2018 2:00 pm");
-        assertTrue(clinicCalendar.hasAppointment(LocalDate.of(2018, 9, 1)));
+        assertTrue(calendar.hasAppointment(LocalDate.of(2018, 9, 1)));
     }
 
     @Test
     void returnFalseForHasAppointmentsIfThereAreNoAppointments() {
-        assertFalse(clinicCalendar.hasAppointment(LocalDate.of(2018, 9, 1)));
+        assertFalse(calendar.hasAppointment(LocalDate.of(2018, 9, 1)));
     }
 
     @Test
     void returnCurrentDaysAppointments() {
 
-        clinicCalendar.addAppointment("Jim", "Weaver", "avery",
-                "1/15/2023 2:00 pm");
-        clinicCalendar.addAppointment("Jim", "Weaver", "avery",
+        calendar.addAppointment("Jim", "Weaver", "avery",
+                "8/26/2018 2:00 pm");
+        calendar.addAppointment("Jim", "Weaver", "avery",
                 "1/15/2023 3:00 pm");
-        clinicCalendar.addAppointment("Jim", "Weaver", "avery",
+        calendar.addAppointment("Jim", "Weaver", "avery",
                 "09/01/2018 2:00 pm");
-        assertEquals(2, clinicCalendar.getTodayAppointments().size());
+        assertEquals(1, calendar.getTodayAppointments().size());
     }
 
 
 
+    @Nested
+    @DisplayName("return appointments for a given day correctly")
+    class AppointmentsForDay {
+
+        @Test
+        @DisplayName("for today")
+        void returnCurrentDaysAppointments() {
+            calendar.addAppointment("Jim", "Weaver", "avery",
+                    "08/26/2018 2:00 pm");
+            calendar.addAppointment("Jim", "Weaver", "avery",
+                    "08/26/2018 3:00 pm");
+            calendar.addAppointment("Jim", "Weaver", "avery",
+                    "09/01/2018 2:00 pm");
+            assertEquals(2, calendar.getTodayAppointments().size());
+        }
+
+        @Test
+        @DisplayName("for tomorrow")
+        void returnTommorowsAppointments() {
+            calendar.addAppointment("Jim", "Weaver", "avery",
+                    "08/27/2018 2:00 pm");
+            calendar.addAppointment("Jim", "Weaver", "avery",
+                    "08/27/2018 2:00 pm");
+            calendar.addAppointment("Jim", "Weaver", "avery",
+                    "08/26/2018 3:00 pm");
+            assertEquals(2, calendar.getTomorrowAppointments().size());
+        }
+    }
 
 
 
